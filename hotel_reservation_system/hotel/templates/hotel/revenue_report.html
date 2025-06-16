@@ -1,0 +1,45 @@
+{% extends 'hotel/base.html' %}
+
+{% block content %}
+<h2>Revenue Report</h2>
+<form method="get" class="mb-3">
+    <div class="row">
+        <div class="col-md-5">
+            <label for="start_date" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ start_date }}">
+        </div>
+        <div class="col-md-5">
+            <label for="end_date" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="end_date" name="end_date" value="{{ end_date }}">
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+<h4>Total Revenue: ₹{{ total_revenue }}</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Reservation ID</th>
+            <th>Guest Name</th>
+            <th>Room ID</th>
+            <th>Check-In Date</th>
+            <th>Check-Out Date</th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reservation in reservations %}
+        <tr>
+            <td>{{ reservation.reservation_id }}</td>
+            <td>{{ reservation.guest.name }}</td>
+            <td>{{ reservation.room.room_id }}</td>
+            <td>{{ reservation.check_in_date }}</td>
+            <td>{{ reservation.check_out_date }}</td>
+            <td>{{ reservation.total_price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

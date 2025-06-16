@@ -1,0 +1,37 @@
+{% extends 'hotel/base.html' %}
+
+{% block content %}
+<h2>{% if reservation %}Edit Reservation{% else %}Add Reservation{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="room_id" class="form-label">Room ID</label>
+        <input type="text" class="form-control" id="room_id" name="room_id" value="{% if reservation %}{{ reservation.room.room_id }}{% endif %}">
+    </div>
+    <div class="mb-3">
+        <label for="guest_id" class="form-label">Guest ID</label>
+        <input type="text" class="form-control" id="guest_id" name="guest_id" value="{% if reservation %}{{ reservation.guest.guest_id }}{% endif %}">
+    </div>
+    <div class="mb-3">
+        <label for="check_in_date" class="form-label">Check-in Date</label>
+        <input type="date" class="form-control" id="check_in_date" name="check_in_date" value="{% if reservation %}{{ reservation.check_in_date }}{% endif %}">
+    </div>
+    <div class="mb-3">
+        <label for="check_out_date" class="form-label">Check-out Date</label>
+        <input type="date" class="form-control" id="check_out_date" name="check_out_date" value="{% if reservation %}{{ reservation.check_out_date }}{% endif %}">
+    </div>
+    <div class="mb-3">
+        <label for="total_price" class="form-label">Total Price</label>
+        <input type="number" class="form-control" id="total_price" name="total_price" value="{% if reservation %}{{ reservation.total_price }}{% endif %}">
+    </div>
+    <div class="mb-3">
+        <label for="payment_status" class="form-label">Payment Status</label>
+        <select class="form-select" id="payment_status" name="payment_status">
+            <option value="Pending" {% if reservation and reservation.payment_status == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="Paid" {% if reservation and reservation.payment_status == 'Paid' %}selected{% endif %}>Paid</option>
+            <option value="Refunded" {% if reservation and reservation.payment_status == 'Refunded' %}selected{% endif %}>Refunded</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}

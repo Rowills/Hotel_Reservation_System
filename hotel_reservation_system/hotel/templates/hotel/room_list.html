@@ -1,0 +1,31 @@
+{% extends 'hotel/base.html' %}
+
+{% block content %}
+<h2>Rooms</h2>
+<a href="{% url 'room_add' %}" class="btn btn-primary">Add Room</a>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Room ID</th>
+            <th>Type</th>
+            <th>Capacity</th>
+            <th>Price per Night</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for room in rooms %}
+        <tr>
+            <td>{{ room.room_id }}</td>
+            <td>{{ room.room_type }}</td>
+            <td>{{ room.capacity }}</td>
+            <td>{{ room.price_per_night }}</td>
+            <td>
+                <a href="{% url 'room_edit' room.room_id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'room_delete' room.room_id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

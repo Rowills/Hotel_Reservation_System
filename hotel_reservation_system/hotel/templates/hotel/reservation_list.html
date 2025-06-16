@@ -1,0 +1,39 @@
+{% extends 'hotel/base.html' %}
+
+{% block content %}
+<h2>Reservations</h2>
+<a href="{% url 'reservation_add' %}" class="btn btn-primary">Add Reservation</a>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Serial No.</th>
+            <th>Reservation ID</th>
+            <th>Guest</th>
+            <th>Room</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Total Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reservation in reservations %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ reservation.reservation_id }}</td>
+            <td>{{ reservation.guest.name }}</td>
+            <td>{{ reservation.room.room_id }}</td>
+            <td>{{ reservation.check_in_date }}</td>
+            <td>{{ reservation.check_out_date }}</td>
+            <td>{{ reservation.total_price }}</td>
+            <td>{{ reservation.payment_status }}</td>
+            <td>
+                <a href="{% url 'reservation_edit' reservation.reservation_id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'reservation_delete' reservation.reservation_id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

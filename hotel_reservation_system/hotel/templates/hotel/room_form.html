@@ -1,0 +1,70 @@
+{% extends 'hotel/base.html' %}
+
+{% block content %}
+<h2>{% if room %}Edit Room{% else %}Add Room{% endif %}</h2>
+
+<!-- Error Messages -->
+{% if messages %}
+    <div>
+        {% for message in messages %}
+            <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="room_id" class="form-label">Room ID</label>
+        <input type="text" class="form-control" id="room_id" name="room_id" value="{{ room_id|default:'' }}" {% if room %}readonly{% endif %}>
+    </div>
+    <div class="mb-3">
+        <label for="room_type" class="form-label">Room Type</label>
+        <select class="form-select" id="room_type" name="room_type">
+            <option value="">-- Select Room Type --</option>
+            {% for value, label in ROOM_TYPES %}
+            <option value="{{ value }}" {% if room and room.room_type == value or room_type == value %}selected{% endif %}>
+                {{ label }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="capacity" class="form-label">Capacity</label>
+        <input type="number" class="form-control" id="capacity" name="capacity" value="{{ capacity|default:'' }}">
+    </div>
+    <div class="mb-3">
+        <label for="price_per_night" class="form-label">Price Per Night</label>
+        <input type="number" class="form-control" id="price_per_night" name="price_per_night" value="{{ price_per_night|default:'' }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}
+
+
+<!-- Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="errorModalLabel">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to trigger the modal -->
+{% if messages %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+        errorModal.show();
+    });
+</script>
+{% endif %}

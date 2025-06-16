@@ -1,0 +1,25 @@
+{% extends 'hotel/base.html' %}
+
+{% block content %}
+<h2>{% if guest %}Edit Guest{% else %}Add Guest{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="{% if guest %}{{ guest.name }}{% endif %}">
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" value="{% if guest %}{{ guest.email }}{% endif %}">
+    </div>
+    <div class="mb-3">
+        <label for="phone_number" class="form-label">Phone Number</label>
+        <input type="text" class="form-control" id="phone_number" name="phone_number" value="{% if guest %}{{ guest.phone_number }}{% endif %}">
+    </div>
+    <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <textarea class="form-control" id="address" name="address">{% if guest %}{{ guest.address }}{% endif %}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}

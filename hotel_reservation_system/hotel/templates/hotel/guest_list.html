@@ -1,0 +1,31 @@
+{% extends 'hotel/base.html' %}
+
+{% block content %}
+<h2>Guests</h2>
+<a href="{% url 'guest_add' %}" class="btn btn-primary">Add Guest</a>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Guest_id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for guest in guests %}
+        <tr>
+            <td>{{ guest.guest_id }}</td>
+            <td>{{ guest.name }}</td>
+            <td>{{ guest.email }}</td>
+            <td>{{ guest.phone_number }}</td>
+            <td>
+                <a href="{% url 'guest_edit' guest.guest_id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'guest_delete' guest.guest_id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
